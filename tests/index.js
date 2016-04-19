@@ -25,4 +25,14 @@ describe('Calculator', function() {
     const state = store.getState();
     assert.equal(state.display, '124.3');
   });
+
+  it('adds', function(){
+    store.dispatch({type: 'operator', value: '+'});
+    store.dispatch({type: 'digit', value: '6'});
+    const state = store.getState();
+    assert.equal(state.display, '130');
+    assert.equal(state.mem, '6');
+  }); 
+
+
 });
