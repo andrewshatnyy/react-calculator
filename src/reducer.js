@@ -68,10 +68,10 @@ function reducer(state, action){
 
   switch(action.type) {
     case 'operator':
-      Object.assign({}, state, run(state, action.value));
+      state = Object.assign({}, state, run(state, action.value));
       break;
     case 'digit':
-      result += action.value;
+      state = Object.assign({}, state, {display: state.display + action.value});
       break;
     case 'dot':
       if (state.dot) return state;

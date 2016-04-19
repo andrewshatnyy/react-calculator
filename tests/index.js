@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 const { createStore } = require('redux');
 const {reducer, run} = require('../src/reducer');
 const store = createStore(reducer);
