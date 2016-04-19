@@ -11,6 +11,7 @@ describe('Calculator', function() {
     store.dispatch({type: 'digit', value: '4'});
 
     const state = store.getState();
+    console.log(state);
     assert.equal(state.display, '124');
   });
 });
