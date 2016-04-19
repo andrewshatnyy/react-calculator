@@ -1,19 +1,28 @@
+'use strict';
 const assert = require('assert');
 
 const { createStore } = require('redux');
 const {reducer, run} = require('../src/reducer');
-const store = createStore(reducer);
-store.dispatch({type: ''});
-
 
 describe('Calculator', function() {
-  it('stores display value', function() {
+  let store;
+  
+  beforeEach(function(){
+    store = createStore(reducer);
     store.dispatch({type: 'digit', value: '1'});
     store.dispatch({type: 'digit', value: '2'});
     store.dispatch({type: 'digit', value: '4'});
+  });
 
+  it('stores display value', function() {
     const state = store.getState();
-    console.log(state);
     assert.equal(state.display, '124');
+  });
+
+  it('sets dec points', function(){
+    store.dispatch({type: 'dec'});
+    store.dispatch({type: 'digit', value: '3'});
+    const state = store.getState();
+    assert.equal(state.display, '124.3');
   });
 });

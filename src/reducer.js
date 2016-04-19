@@ -73,7 +73,7 @@ function reducer(state, action){
     case 'digit':
       state = Object.assign({}, state, {display: state.display + action.value});
       break;
-    case 'dot':
+    case 'dec':
       if (state.dot) return state;
       state = Object.assign({}, state, {dot: true, display: state.display + '.' });
       break;
