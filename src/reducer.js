@@ -1,86 +1,90 @@
-const ops = {};
+'use strict';
+const ops = {
+  add(a, b) {
+    return (+a) + (+b);
+  },
 
-ops.add = function add(a, b) {
-  return (+a) + (+b);
-}
+  sub(a, b) {
+    if (a === '') return b;
+    return (+a) - (+b);
+  },
 
-ops.sub = function sub(a, b) {
-  return (+a) - (+b);
-}
+  div(a, b) {
+    // @todo catch div 0
+    if (a === '') return b;
+    return (+a) / (+b);
+  },
 
-ops.div = function div(a, b) {
-  // @todo catch div 0
-  return (+a)/(+b);
-}
+  mul(a, b) {
+    // @todo catch div 0
+    if (a === '') return b;
+    return (+a) * (+b);
+  },
 
-ops.mul = function mul(a, b) {
-  // @todo catch div 0
-  return (+a)*(+b);
-}
+  per(a) {
+    return (+a) * 0.01;
+  },
+};
 
-ops.per = function per(a) {
-  return (+a) * 0.01;
-}
-
-
-function run({display, mem, last}, op) {
-  rec = display;
-  switch(op) {
-    case '+':
-      display = ops.add(mem, display);
-      last = 'add';
-      mem = display;
-      break;
-    case '-':
-      display = ops.sub(mem, display);
-      last = 'sub';
-      mem = display;
-      break;
-    case '/':
-      display = ops.div(mem, display);
-      last = 'div';
-      mem = display;
-      break;
-    case '*':
-      display = ops.mul(mem, display);
-      last = 'mul';
-      mem = display;
-      break;
-    case '%':
-      last = '';
-      display = ops.per(display);
-    case '=':
-      if (last === '') break;
-      display = ops[last](mem, display);
-      break;
+function compute(last, { display, mem, reset }) {
+  const original = display;
+  let computed = display;
+  if (!reset) {
+    computed = ops[last](mem, display);
   }
-  return { display, mem, last };
+  return { display: computed, mem: original, last, reset: true };
 }
 
-function reducer(state, action){
+function run({ display, mem, last, reset }, op) {
+  const state = { display, mem, last, reset: true };
+  switch (op) {
+    case '+':
+      return compute('add', { display, mem, reset });
+    case '-':
+      return compute('sub', { display, mem, reset });
+    case '/':
+      return compute('div', { display, mem, reset });
+    case '*':
+      return compute('mul', { display, mem, reset });
+    case '%':
+      return { display: ops.per(display), mem, last: '', reset: true };
+    case '=':
+      if (last === '') return state;
+      return { display: ops[last](mem, display), mem: display, last, reset: true };
+    default:
+      return state;
+  }
+}
 
-  state = state || {
+
+function digit({ display, reset, mem }, number) {
+  if (reset) {
+    return { mem: display, reset: false, display: number };
+  }
+  return { display: (display + number), mem, reset };
+}
+function reducer(prevState, action) {
+  const state = prevState || {
     display: '',
     mem: '',
     dot: false,
     last: '',
+    reset: false,
   };
 
-  switch(action.type) {
+  switch (action.type) {
     case 'operator':
-      state = Object.assign({}, state, run(state, action.value));
-      break;
+      return Object.assign({}, state, run(state, action.value));
     case 'digit':
-      state = Object.assign({}, state, {display: state.display + action.value});
-      break;
+      return Object.assign({}, state, digit(state, action.value));
     case 'dec':
       if (state.dot) return state;
-      state = Object.assign({}, state, {dot: true, display: state.display + '.' });
-      break;
+      return Object.assign({}, state, { dot: true, display: `${state.display}.` });
+    default:
+      return state;
   }
-  return state;
-
 }
+
 module.exports = {
   reducer, run,
 };

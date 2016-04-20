@@ -1,13 +1,13 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
-  context: __dirname + '/src',
+  context: `${__dirname}/src`,
   entry: {
-    app: ["./index.js"],
+    app: ['./index.js'],
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'app.js',
   },
   module: {
