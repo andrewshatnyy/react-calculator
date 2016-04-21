@@ -38,17 +38,17 @@ function compute(last, { display, mem, reset }) {
 function run({ display, mem, last, reset }, op) {
   const state = { display, mem, last, reset: true };
   switch (op) {
-    case '+':
+    case 'plus':
       return compute('add', { display, mem, reset });
-    case '-':
+    case 'minus':
       return compute('sub', { display, mem, reset });
-    case '/':
+    case 'divide':
       return compute('div', { display, mem, reset });
-    case '*':
+    case 'times':
       return compute('mul', { display, mem, reset });
-    case '%':
+    case 'percent':
       return { display: ops.per(display), mem, last: '', reset: true };
-    case '=':
+    case 'equal':
       if (last === '') return state;
       return {
         display: ops[last](mem, display),
@@ -61,8 +61,18 @@ function run({ display, mem, last, reset }, op) {
   }
 }
 
+function cleanState() {
+  return {
+    display: '',
+    mem: '',
+    dot: false,
+    last: '',
+    reset: false,
+  };
+}
 
 function digit({ display, reset, mem, dot }, number) {
+  if (number === 'AC') return cleanState();
   if (number === '.') {
     if (dot) return {};
     return { dot: true, display: `${display}.`, reset };
@@ -73,15 +83,11 @@ function digit({ display, reset, mem, dot }, number) {
   }
   return { display: (display + number), mem, reset };
 }
+
 function reducer(prevState, action) {
-  const state = prevState || {
-    display: '',
-    mem: '',
-    dot: false,
-    last: '',
-    reset: false,
-  };
+  const state = prevState || cleanState();
   Object.freeze(state);
+  console.log(action)
   switch (action.type) {
     case 'operator':
       return Object.assign({}, state, run(state, action.value));

@@ -29,33 +29,34 @@ describe('Calculator', function calc() {
 
   it('adds', function add(){
     let state = false;
-    store.dispatch({ type: 'operator', value: '+' });
+    store.dispatch({ type: 'operator', value: 'plus' });
+    store.dispatch({ type: 'button', value: '1' });
     store.dispatch({ type: 'button', value: '6' });
     state = store.getState();
-    assert.equal(state.display, '6');
+    assert.equal(state.display, '16');
     assert.equal(state.mem, '124');
-    store.dispatch({ type: 'operator', value: '+' });
+    store.dispatch({ type: 'operator', value: 'plus' });
     state = store.getState();
-    assert.equal(state.display, '130');
+    assert.equal(state.display, '140');
     assert.equal(state.mem, '6');
-    store.dispatch({ type: 'operator', value: '+' });
+    store.dispatch({ type: 'operator', value: 'plus' });
     state = store.getState();
-    assert.equal(state.display, '130');
-    assert.equal(state.mem, '130');
+    assert.equal(state.display, '140');
+    assert.equal(state.mem, '140');
   });
 
   it('substracts', function sub(){
     let state = false;
-    store.dispatch({ type: 'operator', value: '-' });
+    store.dispatch({ type: 'operator', value: 'minus' });
     store.dispatch({ type: 'button', value: '6' });
     state = store.getState();
     assert.equal(state.display, '6');
     assert.equal(state.mem, '124');
-    store.dispatch({ type: 'operator', value: '-' });
+    store.dispatch({ type: 'operator', value: 'minus' });
     state = store.getState();
     assert.equal(state.display, '118');
     assert.equal(state.mem, '6');
-    store.dispatch({ type: 'operator', value: '-' });
+    store.dispatch({ type: 'operator', value: 'minus' });
     state = store.getState();
     assert.equal(state.display, '118');
     assert.equal(state.mem, '118');
@@ -63,16 +64,16 @@ describe('Calculator', function calc() {
 
   it('multiplies', function mul(){
     let state = false;
-    store.dispatch({ type: 'operator', value: '*' });
+    store.dispatch({ type: 'operator', value: 'times' });
     store.dispatch({ type: 'button', value: '2' });
     state = store.getState();
     assert.equal(state.display, '2');
     assert.equal(state.mem, '124');
-    store.dispatch({ type: 'operator', value: '*' });
+    store.dispatch({ type: 'operator', value: 'times' });
     state = store.getState();
     assert.equal(state.display, '248');
     assert.equal(state.mem, '2');
-    store.dispatch({ type: 'operator', value: '*' });
+    store.dispatch({ type: 'operator', value: 'times' });
     state = store.getState();
     assert.equal(state.display, '248');
     assert.equal(state.mem, '248');
@@ -80,16 +81,16 @@ describe('Calculator', function calc() {
 
   it('divides', function div(){
     let state = false;
-    store.dispatch({ type: 'operator', value: '/' });
+    store.dispatch({ type: 'operator', value: 'divide' });
     store.dispatch({ type: 'button', value: '2' });
     state = store.getState();
     assert.equal(state.display, '2');
     assert.equal(state.mem, '124');
-    store.dispatch({ type: 'operator', value: '/' });
+    store.dispatch({ type: 'operator', value: 'divide' });
     state = store.getState();
     assert.equal(state.display, '62');
     assert.equal(state.mem, '2');
-    store.dispatch({ type: 'operator', value: '/' });
+    store.dispatch({ type: 'operator', value: 'divide' });
     state = store.getState();
     assert.equal(state.display, '62');
     assert.equal(state.mem, '62');
@@ -97,28 +98,28 @@ describe('Calculator', function calc() {
 
   it('sets percent', function per(){
     let state = false;
-    store.dispatch({ type: 'operator', value: '%' });
+    store.dispatch({ type: 'operator', value: 'percent' });
     state = store.getState();
     assert.equal(state.display, '1.24');
     assert.equal(state.mem, '');
-    store.dispatch({ type: 'operator', value: '%' });
+    store.dispatch({ type: 'operator', value: 'percent' });
     state = store.getState();
     assert.equal(state.display, '0.0124');
     assert.equal(state.mem, '');
   });
   it('equals', function eq(){
     let state = false;
-    store.dispatch({ type: 'operator', value: '+' });
+    store.dispatch({ type: 'operator', value: 'plus' });
     store.dispatch({ type: 'button', value: '2' });
-    store.dispatch({ type: 'operator', value: '=' });
+    store.dispatch({ type: 'operator', value: 'equal' });
     state = store.getState();
     assert.equal(state.display, '126');
     assert.equal(state.mem, '2');
-    store.dispatch({ type: 'operator', value: '=' });
+    store.dispatch({ type: 'operator', value: 'equal' });
     state = store.getState();
     assert.equal(state.display, '128');
     assert.equal(state.mem, '2');
-    store.dispatch({ type: 'operator', value: '=' });
+    store.dispatch({ type: 'operator', value: 'equal' });
     state = store.getState();
     assert.equal(state.display, '130');
     assert.equal(state.mem, '2');
@@ -136,16 +137,16 @@ describe('Calculator', function calc() {
     store.dispatch({ type: 'button', value: '4' });
     state = store.getState();
     assert.equal(state.display, '124.1414');
-    store.dispatch({ type: 'operator', value: '*' });
+    store.dispatch({ type: 'operator', value: 'times' });
     store.dispatch({ type: 'button', value: '2' });
-    store.dispatch({ type: 'operator', value: '=' });
+    store.dispatch({ type: 'operator', value: 'equal' });
     state = store.getState();
     assert.equal(state.display, '248.2828');
-    store.dispatch({ type: 'operator', value: '-' });
+    store.dispatch({ type: 'operator', value: 'minus' });
     store.dispatch({ type: 'button', value: '1' });
     store.dispatch({ type: 'button', value: '0' });
     store.dispatch({ type: 'button', value: '0' });
-    store.dispatch({ type: 'operator', value: '=' });
+    store.dispatch({ type: 'operator', value: 'equal' });
     state = store.getState();
     assert.equal(state.display, '148.2828');
   });
