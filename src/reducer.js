@@ -62,7 +62,12 @@ function run({ display, mem, last, reset }, op) {
 }
 
 
-function digit({ display, reset, mem }, number) {
+function digit({ display, reset, mem, dot }, number) {
+  if (number === '.') {
+    if (dot) return {};
+    return { dot: true, display: `${display}.`, reset };
+  }
+
   if (reset) {
     return { mem: display, reset: false, display: number };
   }
@@ -76,15 +81,12 @@ function reducer(prevState, action) {
     last: '',
     reset: false,
   };
-
+  Object.freeze(state);
   switch (action.type) {
     case 'operator':
       return Object.assign({}, state, run(state, action.value));
     case 'digit':
       return Object.assign({}, state, digit(state, action.value));
-    case 'dec':
-      if (state.dot) return state;
-      return Object.assign({}, state, { dot: true, display: `${state.display}.` });
     default:
       return state;
   }

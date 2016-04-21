@@ -10,9 +10,9 @@ describe('Calculator', function calc() {
 
   beforeEach(function b4e() {
     store = createStore(reducer);
-    store.dispatch({ type: 'digit', value: '1' });
-    store.dispatch({ type: 'digit', value: '2' });
-    store.dispatch({ type: 'digit', value: '4' });
+    store.dispatch({ type: 'button', value: '1' });
+    store.dispatch({ type: 'button', value: '2' });
+    store.dispatch({ type: 'button', value: '4' });
   });
 
   it('stores display value', function val() {
@@ -21,8 +21,8 @@ describe('Calculator', function calc() {
   });
 
   it('sets dec points', function points(){
-    store.dispatch({ type: 'dec' });
-    store.dispatch({ type: 'digit', value: '3' });
+    store.dispatch({ type: 'button', value: '.' });
+    store.dispatch({ type: 'button', value: '3' });
     const state = store.getState();
     assert.equal(state.display, '124.3');
   });
@@ -30,7 +30,7 @@ describe('Calculator', function calc() {
   it('adds', function add(){
     let state = false;
     store.dispatch({ type: 'operator', value: '+' });
-    store.dispatch({ type: 'digit', value: '6' });
+    store.dispatch({ type: 'button', value: '6' });
     state = store.getState();
     assert.equal(state.display, '6');
     assert.equal(state.mem, '124');
@@ -47,7 +47,7 @@ describe('Calculator', function calc() {
   it('substracts', function sub(){
     let state = false;
     store.dispatch({ type: 'operator', value: '-' });
-    store.dispatch({ type: 'digit', value: '6' });
+    store.dispatch({ type: 'button', value: '6' });
     state = store.getState();
     assert.equal(state.display, '6');
     assert.equal(state.mem, '124');
@@ -64,7 +64,7 @@ describe('Calculator', function calc() {
   it('multiplies', function mul(){
     let state = false;
     store.dispatch({ type: 'operator', value: '*' });
-    store.dispatch({ type: 'digit', value: '2' });
+    store.dispatch({ type: 'button', value: '2' });
     state = store.getState();
     assert.equal(state.display, '2');
     assert.equal(state.mem, '124');
@@ -81,7 +81,7 @@ describe('Calculator', function calc() {
   it('divides', function div(){
     let state = false;
     store.dispatch({ type: 'operator', value: '/' });
-    store.dispatch({ type: 'digit', value: '2' });
+    store.dispatch({ type: 'button', value: '2' });
     state = store.getState();
     assert.equal(state.display, '2');
     assert.equal(state.mem, '124');
@@ -109,7 +109,7 @@ describe('Calculator', function calc() {
   it('equals', function eq(){
     let state = false;
     store.dispatch({ type: 'operator', value: '+' });
-    store.dispatch({ type: 'digit', value: '2' });
+    store.dispatch({ type: 'button', value: '2' });
     store.dispatch({ type: 'operator', value: '=' });
     state = store.getState();
     assert.equal(state.display, '126');
@@ -126,25 +126,25 @@ describe('Calculator', function calc() {
 
   it('decimals', function dec(){
     let state = false;
-    store.dispatch({ type: 'dec'});
-    store.dispatch({ type: 'digit', value: '1' });
-    store.dispatch({ type: 'digit', value: '4' });
+    store.dispatch({ type: 'button', value: '.' });
+    store.dispatch({ type: 'button', value: '1' });
+    store.dispatch({ type: 'button', value: '4' });
     state = store.getState();
     assert.equal(state.display, '124.14');
-    store.dispatch({ type: 'dec'});
-    store.dispatch({ type: 'digit', value: '1' });
-    store.dispatch({ type: 'digit', value: '4' });
+    store.dispatch({ type: 'button', value: '.' });
+    store.dispatch({ type: 'button', value: '1' });
+    store.dispatch({ type: 'button', value: '4' });
     state = store.getState();
     assert.equal(state.display, '124.1414');
     store.dispatch({ type: 'operator', value: '*' });
-    store.dispatch({ type: 'digit', value: '2' });
+    store.dispatch({ type: 'button', value: '2' });
     store.dispatch({ type: 'operator', value: '=' });
     state = store.getState();
     assert.equal(state.display, '248.2828');
     store.dispatch({ type: 'operator', value: '-' });
-    store.dispatch({ type: 'digit', value: '1' });
-    store.dispatch({ type: 'digit', value: '0' });
-    store.dispatch({ type: 'digit', value: '0' });
+    store.dispatch({ type: 'button', value: '1' });
+    store.dispatch({ type: 'button', value: '0' });
+    store.dispatch({ type: 'button', value: '0' });
     store.dispatch({ type: 'operator', value: '=' });
     state = store.getState();
     assert.equal(state.display, '148.2828');
