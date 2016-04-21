@@ -80,14 +80,14 @@ p {
 .button.button--gray:active {
   background: #b2b2b2;
 }
-.button.button--orange {
+.button:last-child {
   background: #f39331;
   border-bottom: 1px solid #8e8e8e;
   color: #fff;
   font-size: 28px;
   width: 59px;
 }
-.button.button--orange:active {
+.button:last-child:active {
   background: #c47425;
 }
 .button.button--small-text {
