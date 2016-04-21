@@ -118,5 +118,35 @@ describe('Calculator', function calc() {
     state = store.getState();
     assert.equal(state.display, '128');
     assert.equal(state.mem, '2');
+    store.dispatch({ type: 'operator', value: '=' });
+    state = store.getState();
+    assert.equal(state.display, '130');
+    assert.equal(state.mem, '2');
+  });
+
+  it('decimals', function dec(){
+    let state = false;
+    store.dispatch({ type: 'dec'});
+    store.dispatch({ type: 'digit', value: '1' });
+    store.dispatch({ type: 'digit', value: '4' });
+    state = store.getState();
+    assert.equal(state.display, '124.14');
+    store.dispatch({ type: 'dec'});
+    store.dispatch({ type: 'digit', value: '1' });
+    store.dispatch({ type: 'digit', value: '4' });
+    state = store.getState();
+    assert.equal(state.display, '124.1414');
+    store.dispatch({ type: 'operator', value: '*' });
+    store.dispatch({ type: 'digit', value: '2' });
+    store.dispatch({ type: 'operator', value: '=' });
+    state = store.getState();
+    assert.equal(state.display, '248.2828');
+    store.dispatch({ type: 'operator', value: '-' });
+    store.dispatch({ type: 'digit', value: '1' });
+    store.dispatch({ type: 'digit', value: '0' });
+    store.dispatch({ type: 'digit', value: '0' });
+    store.dispatch({ type: 'operator', value: '=' });
+    state = store.getState();
+    assert.equal(state.display, '148.2828');
   });
 });
