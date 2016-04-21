@@ -50,7 +50,7 @@ function run({ display, mem, last, reset }, op) {
       return { display: ops.per(display), mem, last: '', reset: true };
     case '=':
       if (last === '') return state;
-      return { display: ops[last](mem, display), mem: display, last, reset: true };
+      return { display: ops[last](mem, display), mem, last, reset: true };
     default:
       return state;
   }
