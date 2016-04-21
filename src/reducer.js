@@ -85,7 +85,7 @@ function reducer(prevState, action) {
   switch (action.type) {
     case 'operator':
       return Object.assign({}, state, run(state, action.value));
-    case 'digit':
+    case 'button':
       return Object.assign({}, state, digit(state, action.value));
     default:
       return state;
