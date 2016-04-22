@@ -33,11 +33,15 @@ p {
   clear: both;
 }
 .calculator-head {
+  overflow: hidden;
   background: #686868;
 }
 .calculator-result {
+  display: table-cell;
+  vertical-align: bottom;
+  width: 232px;
+  height: 58px;
   color: #fff;
-  display: block;
   font-size: 48px;
   padding: 0 14px 2px 13px;
   text-align: right;

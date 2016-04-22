@@ -11,11 +11,6 @@ class App extends React.Component {
   }
 }
 
-// App.propTypes = {
-//   store: React.PropTypes.object,
-//   children: React.PropTypes.object,
-// };
-
 App.childContextTypes = {
   store: React.PropTypes.object,
 };
