@@ -13,20 +13,22 @@ class Head extends React.Component {
   genStyle(display) {
     const base = 48;
     const limit = 8;
-    if (display.length < (limit + 1)) return {};
-    const koef = base / (limit / 2);
+    const digits = display.length;
+    if (digits < (limit + 1)) return {};
+    const koef = (base / (limit / 2));
     return {
-      fontSize: base - ((display.length / limit) * (koef)),
+      fontSize: base - ((digits / limit) * (koef)),
     };
   }
 
   render() {
     const { store } = this.context;
     const { display } = store.getState();
-    const style = this.genStyle(display);
+    const result = `${display || 0}`;
+    const style = this.genStyle(result);
     return (
       <div className="calculator-head">
-        <div className="calculator-result" style={style}>{ display || 0}</div>
+        <div className="calculator-result" style={style}>{ result }</div>
       </div>
     );
   }
