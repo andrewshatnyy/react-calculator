@@ -77,6 +77,11 @@ function cleanState() {
   };
 }
 
+function concat(display, number) {
+  if (display === '0' && number === '0') return `${display}`;
+  return `${display}${number}`;
+}
+
 function digit({ display, reset, mem, dot }, number) {
   if (number === 'AC') return cleanState();
   if (reset) {
@@ -86,7 +91,7 @@ function digit({ display, reset, mem, dot }, number) {
     if (dot) return {};
     return { dot: true, display: `${display}.`, reset };
   }
-  return { display: `${display}${number}`, mem, reset };
+  return { display: concat(display, number), mem, reset };
 }
 
 function reducer(prevState, action) {

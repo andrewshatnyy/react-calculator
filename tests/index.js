@@ -20,6 +20,15 @@ describe('Calculator', function calc() {
     assert.equal(state.display, '124');
   });
 
+  it('handle zeroes', function val() {
+    store.dispatch({ type: 'button', value: 'AC' });
+    store.dispatch({ type: 'button', value: '0' });
+    store.dispatch({ type: 'button', value: '0' });
+    store.dispatch({ type: 'button', value: '0' });
+    const state = store.getState();
+    assert.equal(state.display, '0');
+  });  
+
   it('deals with plus / minus', function pm(){
     store.dispatch({ type: 'operator', value: 'plusminus' });
     let state = store.getState();
