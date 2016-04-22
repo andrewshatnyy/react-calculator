@@ -78,7 +78,9 @@ function cleanState() {
 }
 
 function concat(display, number) {
-  if (display === '0' && number === '0') return `${display}`;
+  const zero = (+display < 1);
+  if (zero && number === '0') return `${display}`;
+  if (zero && number === '.') return `0${number}`;
   return `${display}${number}`;
 }
 
@@ -89,7 +91,7 @@ function digit({ display, reset, mem, dot }, number) {
   }
   if (number === '.') {
     if (dot) return {};
-    return { dot: true, display: `${display}.`, reset };
+    return { dot: true, display: concat(display, number), reset };
   }
   return { display: concat(display, number), mem, reset };
 }

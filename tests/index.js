@@ -26,7 +26,7 @@ describe('Calculator', function calc() {
     store.dispatch({ type: 'button', value: '0' });
     store.dispatch({ type: 'button', value: '0' });
     const state = store.getState();
-    assert.equal(state.display, '0');
+    assert.equal(+state.display, 0);
   });  
 
   it('deals with plus / minus', function pm(){
