@@ -1,5 +1,9 @@
 'use strict';
 const ops = {
+  negate(a) {
+    return (-1 * (+a));
+  },
+
   add(a, b) {
     return (+a) + (+b);
   },
@@ -38,6 +42,8 @@ function compute(last, { display, mem, reset }) {
 function run({ display, mem, last, reset }, op) {
   const state = { display, mem, last, reset: true };
   switch (op) {
+    case 'plusminus':
+      return { display: `${ops.negate(display)}`, mem, reset: false, last };
     case 'plus':
       return compute('add', { display, mem, reset });
     case 'minus':
@@ -73,26 +79,24 @@ function cleanState() {
 
 function digit({ display, reset, mem, dot }, number) {
   if (number === 'AC') return cleanState();
+  if (reset) {
+    return { mem: display, reset: false, display: number };
+  }
   if (number === '.') {
     if (dot) return {};
     return { dot: true, display: `${display}.`, reset };
   }
-
-  if (reset) {
-    return { mem: display, reset: false, display: number };
-  }
-  return { display: (display + number), mem, reset };
+  return { display: `${display}${number}`, mem, reset };
 }
 
 function reducer(prevState, action) {
   const state = prevState || cleanState();
   Object.freeze(state);
-  console.log(action)
   switch (action.type) {
     case 'operator':
-      return Object.assign({}, state, run(state, action.value));
+      return Object.assign({}, state, run(state, `${action.value}`));
     case 'button':
-      return Object.assign({}, state, digit(state, action.value));
+      return Object.assign({}, state, digit(state, `${action.value}`));
     default:
       return state;
   }

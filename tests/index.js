@@ -20,6 +20,22 @@ describe('Calculator', function calc() {
     assert.equal(state.display, '124');
   });
 
+  it('deals with plus / minus', function pm(){
+    store.dispatch({ type: 'operator', value: 'plusminus' });
+    let state = store.getState();
+    assert.equal(state.display, '-124');
+    store.dispatch({ type: 'operator', value: 'plusminus' });
+    store.dispatch({ type: 'button', value: '1' });
+    state = store.getState();
+    assert.equal(state.display, '1241');
+  });
+
+  it('cleans state', function clean() {
+    store.dispatch({ type: 'button', value: 'AC' });
+    const state = store.getState();
+    assert.equal(state.display, '');
+  });
+
   it('sets dec points', function points(){
     store.dispatch({ type: 'button', value: '.' });
     store.dispatch({ type: 'button', value: '3' });
@@ -38,7 +54,7 @@ describe('Calculator', function calc() {
     store.dispatch({ type: 'operator', value: 'plus' });
     state = store.getState();
     assert.equal(state.display, '140');
-    assert.equal(state.mem, '6');
+    assert.equal(state.mem, '16');
     store.dispatch({ type: 'operator', value: 'plus' });
     state = store.getState();
     assert.equal(state.display, '140');
