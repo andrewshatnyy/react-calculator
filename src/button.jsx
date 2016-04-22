@@ -20,6 +20,7 @@ function Button({ types, value, operator }, { store }) {
   const classes = mapClasses(types);
   const action = actionType(value, operator);
   const operatorNode = (operator) ? <Operator type={operator} /> : value;
+
   return (
     <div className={classes} onClick={() => store.dispatch(action)}>
       { operatorNode }
